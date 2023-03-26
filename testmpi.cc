@@ -23,9 +23,9 @@ int main(int argc, char** argv) {
   std::vector<int> data(100, 5); 
   for( int i=0; i<ndups; ++i) {
     auto comm = comms[i%ncoms];
-    rank = MPI_Comm_rank(comm, &rank);
-    size = MPI_Comm_rank(comm, &size);
     PCU_Switch_Comm(comm);
+    PCU_Comm_Rank(&rank);
+    PCU_Comm_Size(&size);
     PCU_Comm_Begin();
     PCU_Comm_Write((size==1)?0:i%(size-1), data.data(), data.size()*sizeof(int));
     PCU_Comm_Send();
